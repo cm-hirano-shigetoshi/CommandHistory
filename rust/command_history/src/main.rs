@@ -21,7 +21,7 @@ pub fn execute_fzf(path: &str) -> String {
 }
 
 pub fn get_fzf_command(path: &str) -> String {
-    return format!("cat {} | fzf", path);
+    return format!("cat {} | awk '!a[$0]++' | fzf", path);
 }
 
 pub fn execute_command(command: &str) -> Result<String> {
