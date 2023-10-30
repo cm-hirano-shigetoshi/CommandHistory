@@ -1,5 +1,5 @@
 ZSH_COMMAND_HISTORY_TOOLDIR=${ZSH_COMMAND_HISTORY_TOOLDIR-${0:A:h}}
-HISTORY_BASE_DIR="${XDG_DATA_HOME-$HOME/.local/share}/zsh/CommandHistory/"
+HISTORY_BASE_DIR="${XDG_DATA_HOME-$HOME/.local/share}/zsh/CommandHistory"
 HISTORY_GLOBAL_FILE="${HISTORY_BASE_DIR}/.__history"
 
 function fzf-command-history() {

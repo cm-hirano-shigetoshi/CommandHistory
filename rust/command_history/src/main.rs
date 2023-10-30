@@ -1,4 +1,5 @@
 use std::io::{Error, Result};
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 fn main() {
@@ -8,11 +9,12 @@ fn main() {
         return;
     }
     let file_path: &str = &args[1];
-
-    let new_buffer = execute_fzf(file_path);
-    if new_buffer.len() > 0 {
-        let new_cursor = new_buffer.len();
-        println!("{} {}", new_cursor, new_buffer);
+    if Path::new(file_path).exists() {
+        let new_buffer = execute_fzf(file_path);
+        if new_buffer.len() > 0 {
+            let new_cursor = new_buffer.len();
+            println!("{} {}", new_cursor, new_buffer);
+        }
     }
 }
 
