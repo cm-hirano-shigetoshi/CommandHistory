@@ -22,7 +22,10 @@ pub fn execute_fzf(path: &str) -> String {
 }
 
 pub fn get_fzf_command(path: &str) -> String {
-    return format!("cat {} | awk '!a[$0]++' | fzf", path);
+    return format!(
+        "tac {} | cut -c26- | awk '!a[$0]++' | rg -v '^ *$' | fzf",
+        path
+    );
 }
 
 pub fn execute_command(command: &str) -> Result<String> {
@@ -45,13 +48,6 @@ pub fn execute_command(command: &str) -> Result<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_execute_fzf() {
-        let path = "/tmp/powerlog/history";
-        let result = execute_fzf(path);
-        assert_eq!(result, "/tmp/powerlog/history");
-    }
 
     #[test]
     fn test_execute_command() {

@@ -14,9 +14,9 @@ function fzf-command-history() {
 zle -N fzf-command-history
 bindkey "^t" fzf-command-history
 
-function ___preexec() {
+function preexec() {
     local history_local_file
     history_local_file="${HISTORY_BASE_DIR}/${PWD}/.__history"
     mkdir -p $(dirname ${history_local_file})
-    echo "$1" >> ${history_local_file}
+    echo "$1" | sed "s/^/$(date '+%Y-%m-%dT%H:%M:%S%z')\t/" >> ${history_local_file}
 }
