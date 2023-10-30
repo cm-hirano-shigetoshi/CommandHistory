@@ -10,14 +10,15 @@ fn main() {
     let file_path: &str = &args[1];
 
     let new_buffer = execute_fzf(file_path);
-    let new_cursor = new_buffer.len();
-    println!("{} {}", new_cursor, new_buffer);
+    if new_buffer.len() > 0 {
+        let new_cursor = new_buffer.len();
+        println!("{} {}", new_cursor, new_buffer);
+    }
 }
 
 pub fn execute_fzf(path: &str) -> String {
     let fzf_command = get_fzf_command(path);
-    let ret = execute_command(fzf_command.as_str());
-    return ret.unwrap();
+    return execute_command(fzf_command.as_str()).unwrap_or_else(|_err| String::from(""));
 }
 
 pub fn get_fzf_command(path: &str) -> String {
