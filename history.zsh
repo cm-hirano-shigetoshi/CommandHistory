@@ -15,5 +15,5 @@ zle -N fzf-command-history
 function preexec() {
     date '+%Y-%m-%dT%H:%M:%S%z' | \
         paste - <(echo "\"${PWD}\"") | \
-        paste - <(echo "$1") >> "${HISTORY_GLOBAL_FILE}"
+        paste - <(echo "$1" | perl -pe 'chomp if eof' | tr '\n' '') >> "${HISTORY_GLOBAL_FILE}"
 }
