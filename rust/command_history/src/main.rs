@@ -4,14 +4,15 @@ use std::process::{Command, Stdio};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-    if args.len() < 3 {
+    if args.len() < 4 {
         println!("Please provide one argument");
         return;
     }
     let file_path: &str = &args[1];
-    let tool_dir: &str = &args[2];
+    let lbuffer: &str = &args[2];
+    let tool_dir: &str = &args[3];
     if Path::new(file_path).exists() {
-        let new_buffer = execute_fzf(file_path, tool_dir);
+        let new_buffer = execute_fzf(file_path, lbuffer, tool_dir);
         if new_buffer.len() > 0 {
             let new_cursor = new_buffer.len();
             println!("{} {}", new_cursor, new_buffer);
@@ -19,15 +20,15 @@ fn main() {
     }
 }
 
-pub fn execute_fzf(path: &str, tool_dir: &str) -> String {
-    let fzf_command = get_fzf_command(path, tool_dir);
+pub fn execute_fzf(path: &str, lbuffer: &str, tool_dir: &str) -> String {
+    let fzf_command = get_fzf_command(path, lbuffer, tool_dir);
     return execute_command(fzf_command.as_str()).unwrap_or_else(|_err| String::from(""));
 }
 
-pub fn get_fzf_command(path: &str, tool_dir: &str) -> String {
+pub fn get_fzf_command(path: &str, lbuffer: &str, tool_dir: &str) -> String {
     return format!(
-        "tac {} | {}/bash/local.sh | fzf --ansi --bind 'ctrl-r:reload(tac {} | {}/bash/global.sh)'",
-        path, tool_dir, path, tool_dir
+        "tac {} | {}/bash/local.sh | fzf --ansi --query '{}' --bind 'ctrl-r:reload(tac {} | {}/bash/global.sh)'",
+        path, tool_dir, lbuffer, path, tool_dir
     );
 }
 
