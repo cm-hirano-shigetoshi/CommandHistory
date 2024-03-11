@@ -27,7 +27,7 @@ pub fn execute_fzf(path: &str, lbuffer: &str, tool_dir: &str) -> String {
 
 pub fn get_fzf_command(path: &str, lbuffer: &str, tool_dir: &str) -> String {
     return format!(
-        "tac {} | {}/bash/local.sh | fzf --ansi --query '{}' --bind 'ctrl-r:reload(tac {} | {}/bash/global.sh)'",
+        "tac {} | {}/bash/local.sh | fzf --ansi --query '{}' --bind 'enter:accept-or-print-query' --bind 'ctrl-r:reload(tac {} | {}/bash/global.sh)'",
         path, tool_dir, lbuffer, path, tool_dir
     );
 }
