@@ -2,6 +2,8 @@ ZSH_COMMAND_HISTORY_TOOLDIR=${ZSH_COMMAND_HISTORY_TOOLDIR-${0:A:h}}
 ZSH_COMMAND_HISTORY_BASE_DIR="${XDG_DATA_HOME-$HOME/.local/share}/zsh/CommandHistory"
 ZSH_COMMAND_HISTORY_FILE="${ZSH_COMMAND_HISTORY_BASE_DIR}/.__history"
 
+mkdir -p "$ZSH_COMMAND_HISTORY_BASE_DIR"
+
 function fzf-command-history() {
     read _CURSOR _BUFFER <<< $( \
         "${ZSH_COMMAND_HISTORY_TOOLDIR}/rust/command_history/target/release/command_history" \
